@@ -64,7 +64,11 @@ function Login() {
       </div>
       <div className="login-form-container">
         <Form className="login-form" onFinish={onFinish}>
-          <Form.Item style={{ margin: 0, marginBottom: 15 }}>
+          <Form.Item
+            style={{ margin: 0, marginBottom: 15 }}
+            name="username"
+            rules={[{ required: true, message: "Username is required!" }]}
+          >
             <Input
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -72,7 +76,11 @@ function Login() {
               style={{ padding: 10 }}
             />
           </Form.Item>
-          <Form.Item style={{ margin: 0, marginBottom: 25 }}>
+          <Form.Item
+            style={{ margin: 0, marginBottom: 25 }}
+            name="password"
+            rules={[{ required: true, message: "Password is required!" }]}
+          >
             <Input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
