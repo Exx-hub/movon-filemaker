@@ -9,7 +9,7 @@ export const config = {
     build: "1.0.0(1)",
   },
   environment: "",
-  changeLogs: `setup/new-project-setup/build1`,
+  changeLogs: `page/login-page/build1`,
 };
 
 export const ERROR_CODES = {
