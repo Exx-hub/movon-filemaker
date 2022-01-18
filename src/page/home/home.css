@@ -1,0 +1,32 @@
+.home-page-container {
+}
+.home-body {
+}
+.home-sider {
+  height: 92vh;
+  /* height: 100%; */
+  background-color: white;
+  padding-top: 20px;
+}
+.menu-item {
+  background-color: rgb(65, 64, 64);
+  color: white;
+  font-weight: 500;
+  border-radius: 33px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  /* font-family: "Roboto", sans-serif !important; */
+  margin-top: 20px !important;
+}
+
+.home-sider .ant-menu-item-selected {
+  background-color: #348f80 !important;
+}
+
+.ant-menu-item:hover {
+  color: white !important;
+}
+
+.home-content {
+}

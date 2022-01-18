@@ -1,0 +1,20 @@
+.searchModule-container {
+  /* padding: 25px;  */
+}
+
+.search-input {
+  width: 450px;
+  border-radius: 18px;
+  height: 45px;
+  padding-left: 40px;
+}
+
+.searchModule-container input::placeholder {
+  text-align: center;
+  font-size: 18px;
+}
+
+.search-icon {
+  font-size: 20px;
+  color: rgb(153, 153, 153);
+}

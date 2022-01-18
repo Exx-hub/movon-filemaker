@@ -52,7 +52,7 @@ function Login() {
       });
 
       setTimeout(() => {
-        history.push("/home");
+        history.push("/");
       }, 1000);
     }, 2000);
   };
