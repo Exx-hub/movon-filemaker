@@ -6,10 +6,10 @@ export const config = {
   },
   version: {
     environment: "",
-    build: "1.0.0(1)",
+    build: "1.0.0(2)",
   },
   environment: "",
-  changeLogs: `page/search-module/build1`,
+  changeLogs: `feature/trip-manifest/build2`,
 };
 
 export const ERROR_CODES = {

@@ -1,6 +1,7 @@
 .transactionModule-container {
-  /* height: 92vh; */
+  height: 92vh;
   padding: 20px;
+  overflow: scroll;
 }
 .search-date-container {
   /* border: 1px solid red; */
@@ -9,24 +10,25 @@
   align-items: center;
   padding: 20px 0px;
 }
-.details-container {
-  background-color: white;
-  display: flex;
-  border-radius: 12px;
-}
-
-.seatMap-container {
-}
-.bus-image {
-  width: 100%;
-}
 
 .trip-details-container {
   width: 100%;
+  background-color: white;
+  border-radius: 12px;
 }
 .trip-details {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 20px 20px 10px 20px;
+}
+.trip-manifest-title {
+  margin-left: 10px;
+  font-size: 22px;
+  font-weight: 500;
+}
+.title-values-div {
+  display: flex;
 }
 
 .title {
@@ -48,14 +50,22 @@
   margin: 0 auto;
 }
 
-.table-container {
+.tableContainer {
   width: 100%;
   padding: 15px;
 }
 
-.table-container th {
-  background-color: rgba(46, 49, 49, 0.5) !important;
-  color: white !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
+.tableContainer th {
+  background-color: rgba(46, 49, 49, 0.15) !important;
+  color: #333 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px;
+  /* border-color: gray !important; */
+}
+
+.tableContainer td {
+  font-size: 11px;
+  font-weight: 300 !important;
+  color: black;
 }

@@ -128,6 +128,7 @@ function SearchModule() {
           // pagination={false}
           columns={tableSource}
           dataSource={dataSource}
+          bordered
           // to use pagination from ant D, default table pagination not ideal
         />
       </div>
