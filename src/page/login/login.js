@@ -8,7 +8,11 @@ import city2 from "../../assets/images/city2.png";
 import { config } from "../../config";
 
 import { Image, Form, Input, Button, Space, Spin } from "antd";
-import { UserProfile } from "../../utility";
+import {
+  loginFailedPrompt,
+  loginSuccessPrompt,
+  UserProfile,
+} from "../../utility";
 import { useHistory } from "react-router-dom";
 
 import { LoadingOutlined } from "@ant-design/icons";
@@ -18,7 +22,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  console.log(username, password);
+  // console.log(username, password);
 
   const history = useHistory();
 
@@ -39,22 +43,29 @@ function Login() {
     // login api here!!!
     // add alerts/notifications
 
-    // console.log(username, password);
+    console.log(username, password);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      alert("login success");
-
-      // hardcoded setting of creds in localstorage w/out api
-      UserProfile.setCredential({
-        user: { name: username },
-        token: password,
-      });
-
+    if (username === "alvin") {
       setTimeout(() => {
-        history.push("/");
-      }, 1000);
-    }, 2000);
+        setIsLoading(false);
+        loginSuccessPrompt();
+
+        // hardcoded setting of creds in localstorage w/out api
+        UserProfile.setCredential({
+          user: { name: username },
+          token: password,
+        });
+
+        setTimeout(() => {
+          history.push("/");
+        }, 1000);
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+        loginFailedPrompt();
+      }, 2000);
+    }
   };
 
   return (

@@ -9,6 +9,10 @@ import { Layout, Menu } from "antd";
 import SearchModule from "../searchModule";
 import TransactionModule from "../transactionModule";
 
+import { PoweroffOutlined } from "@ant-design/icons";
+import { config } from "../../config";
+import { logoutSuccess, UserProfile } from "../../utility";
+
 const { Content, Sider } = Layout;
 
 function Home() {
@@ -18,28 +22,43 @@ function Home() {
   const { pathname } = location;
 
   console.log(pathname);
+
+  const handleLogout = () => {
+    UserProfile.clearData();
+    logoutSuccess();
+    history.push("/");
+  };
   return (
     <Layout className="home-page-container">
       <Header />
 
       <Layout className="home-body">
         <Sider width={240} className="home-sider">
-          <Menu selectedKeys={[pathname]}>
-            <Menu.Item
-              key={"/search"}
-              className="menu-item"
-              onClick={() => history.push("/search")}
-            >
-              Search
-            </Menu.Item>
-            <Menu.Item
-              key={"/transaction"}
-              className="menu-item"
-              onClick={() => history.push("/transaction")}
-            >
-              Transaction
-            </Menu.Item>
-          </Menu>
+          <div className="sider-container">
+            <Menu selectedKeys={[pathname]}>
+              <Menu.Item
+                key={"/search"}
+                className="menu-item"
+                onClick={() => history.push("/search")}
+              >
+                Search
+              </Menu.Item>
+              <Menu.Item
+                key={"/transaction"}
+                className="menu-item"
+                onClick={() => history.push("/transaction")}
+              >
+                Transaction
+              </Menu.Item>
+            </Menu>
+
+            <div className="logout-div">
+              <div className="logout-button" onClick={handleLogout}>
+                <PoweroffOutlined /> Logout
+              </div>
+              <div>build {config.version.build}</div>
+            </div>
+          </div>
         </Sider>
 
         <Layout className="home-content">
