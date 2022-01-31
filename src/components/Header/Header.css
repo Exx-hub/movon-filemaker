@@ -1,0 +1,38 @@
+.home-header {
+  background-color: #348f80;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 8vh;
+
+  padding: 0 40px;
+}
+.home-header-logo {
+  min-width: 210px;
+
+  cursor: pointer;
+  /* width: 205px; */
+
+  /* border: 1px solid red; */
+}
+.header-logo {
+  height: 65px;
+  transform: translateY(15px);
+}
+
+.user-icon {
+  color: white;
+  margin-right: 3px;
+  font-size: 16px;
+}
+
+.welcome-message-div {
+  /* min-width: 230px; */
+}
+
+.welcome-message {
+  color: white;
+  font-size: 16px;
+}
