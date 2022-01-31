@@ -45,7 +45,7 @@ function Login() {
 
     console.log(username, password);
 
-    if (username === "alvin") {
+    if (username === "user" && password === "123456") {
       setTimeout(() => {
         setIsLoading(false);
         loginSuccessPrompt();
