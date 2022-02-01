@@ -25,6 +25,10 @@
   color: rgb(153, 153, 153);
 }
 
+.table-container {
+  width: 100%;
+}
+
 .table-container th {
   background-color: rgba(46, 49, 49, 0.5) !important;
   color: white !important;

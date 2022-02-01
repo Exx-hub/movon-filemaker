@@ -69,3 +69,17 @@
   font-weight: 300 !important;
   color: black;
 }
+
+@media screen and (max-width: 1000px) {
+  .title-values-div {
+    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+
+  .trip-details {
+    padding-right: 0;
+  }
+  .trip-manifest-title {
+    /* align-self: flex-end; */
+  }
+}
