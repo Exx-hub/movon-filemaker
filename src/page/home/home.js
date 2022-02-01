@@ -9,7 +9,11 @@ import { Layout, Menu } from "antd";
 import SearchModule from "../searchModule";
 import TransactionModule from "../transactionModule";
 
-import { PoweroffOutlined } from "@ant-design/icons";
+import {
+  PoweroffOutlined,
+  SearchOutlined,
+  FileDoneOutlined,
+} from "@ant-design/icons";
 import { config } from "../../config";
 import { logoutSuccess, UserProfile } from "../../utility";
 
@@ -40,15 +44,17 @@ function Home() {
                 key={"/search"}
                 className="menu-item"
                 onClick={() => history.push("/search")}
+                icon={<SearchOutlined className="menu-icon" />}
               >
-                Search
+                <span className="menu-label">Search</span>
               </Menu.Item>
               <Menu.Item
                 key={"/transaction"}
                 className="menu-item"
                 onClick={() => history.push("/transaction")}
+                icon={<FileDoneOutlined className="menu-icon" />}
               >
-                Transaction
+                <span className="menu-label">Transaction</span>
               </Menu.Item>
             </Menu>
 

@@ -37,9 +37,11 @@
   border-radius: 33px;
   width: 80%;
   margin: 0 auto;
-  text-align: center;
-  /* font-family: "Roboto", sans-serif !important; */
   margin-top: 20px !important;
+}
+
+.menu-icon {
+  margin-left: 15px;
 }
 
 .home-sider .ant-menu-item-selected {

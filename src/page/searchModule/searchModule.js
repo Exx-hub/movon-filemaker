@@ -123,6 +123,7 @@ function SearchModule() {
         <Table
           // loading={this.state.fetching}
           // scroll={{ y: 700 }}
+          scroll={{ x: "max-content" }}
           rowKey="key"
           pagination={{ position: ["bottomCenter"] }}
           // pagination={false}
