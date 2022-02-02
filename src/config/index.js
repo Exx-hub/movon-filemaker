@@ -9,7 +9,7 @@ export const config = {
     build: "1.0.0(2)",
   },
   environment: "",
-  changeLogs: `feature/media-queries/build2`,
+  changeLogs: `feature/download-reports/build2`,
 };
 
 export const ERROR_CODES = {
