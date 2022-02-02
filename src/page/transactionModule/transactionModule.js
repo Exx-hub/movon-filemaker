@@ -2,7 +2,9 @@ import React from "react";
 import "./transactionModule.css";
 import { dataSource } from "./sampleData";
 
-import { Input, DatePicker, Image, Table } from "antd";
+import { Input, DatePicker, Table, Dropdown, Button } from "antd";
+
+import { ProfileOutlined, DownOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 
@@ -115,13 +117,32 @@ const tableSource = [
 ];
 
 function TransactionModule() {
+  const handleDownload = () => {
+    // add download xls api here with passed filters
+    alert("download xls clicked");
+  };
+
+  const menu = (
+    <div className="dropdown-menu">
+      <div onClick={handleDownload}>
+        <ProfileOutlined /> Download XLS
+      </div>
+    </div>
+  );
   return (
     <div className="transactionModule-container">
       <div className="search-date-container">
-        {/* RS INPUT  */}
         <Input placeholder="RS #" style={{ width: "20%" }} />
-        {/* DATE RANGE PICKER  */}
-        <RangePicker style={{ width: "20%" }} />
+
+        <div className="date-dropdown-div">
+          <RangePicker style={{ width: "100%" }} />
+
+          <Dropdown overlay={menu}>
+            <Button className="dropdown-item-btn">
+              <DownOutlined /> Download
+            </Button>
+          </Dropdown>
+        </div>
       </div>
 
       <div className="trip-details-container">

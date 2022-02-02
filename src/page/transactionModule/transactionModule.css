@@ -7,8 +7,30 @@
   /* border: 1px solid red; */
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px 0px;
+}
+.date-dropdown-div {
+  width: 20%;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.dropdown-item-btn {
+  width: 120px;
+  margin-top: 7px;
+  /* cursor: pointer; */
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 5px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .trip-details-container {
