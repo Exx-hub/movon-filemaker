@@ -1,0 +1,26 @@
+.modal {
+  text-align: center;
+  border-radius: 5px;
+  padding: 0;
+  overflow: hidden;
+  /* transform: translateY(100px); */
+}
+
+.cancel-btn {
+  border-radius: 7px;
+  border: 1px solid #333;
+}
+
+.cancel-btn:hover {
+  color: black;
+  border: 1px solid #333;
+}
+
+.ok-btn,
+.ok-btn:hover {
+  border-radius: 7px;
+  border: 1px solid #008176;
+  background-color: #008176;
+  color: white;
+  margin-left: 10px;
+}
