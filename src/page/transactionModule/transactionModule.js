@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./transactionModule.css";
 import { dataSource } from "./sampleData";
 
@@ -117,6 +117,10 @@ const tableSource = [
 ];
 
 function TransactionModule() {
+  const [rsInput, setRsInput] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
   const handleDownload = () => {
     // add download xls api here with passed filters
     alert("download xls clicked");

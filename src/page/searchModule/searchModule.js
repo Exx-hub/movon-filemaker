@@ -14,15 +14,15 @@ const tableSource = [
     align: "center",
   },
   {
-    title: "Travel",
-    dataIndex: "travel",
-    key: "travel",
+    title: "Travel Date",
+    dataIndex: "travelDate",
+    key: "travelDate",
     align: "center",
   },
   {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
+    title: "From",
+    dataIndex: "from",
+    key: "from",
     align: "center",
   },
   {
@@ -60,8 +60,8 @@ const tableSource = [
 const dataSource = [
   {
     name: "Alvin Acosta",
-    travel: "N/A",
-    date: "January 19, 2022",
+    travelDate: "January 19, 2022",
+    from: "Cubao",
     to: "Baguio",
     contactNumber: "0916-4209977",
     ticketRef: "BC12345",
@@ -71,8 +71,8 @@ const dataSource = [
   },
   {
     name: "Alvin Acosta",
-    travel: "N/A",
-    date: "January 19, 2022",
+    travelDate: "January 19, 2022",
+    from: "Cubao",
     to: "Baguio",
     contactNumber: "0916-4209977",
     ticketRef: "BC12345",
@@ -82,8 +82,8 @@ const dataSource = [
   },
   {
     name: "Alvin Acosta",
-    travel: "N/A",
-    date: "January 19, 2022",
+    travelDate: "January 19, 2022",
+    from: "Cubao",
     to: "Baguio",
     contactNumber: "0916-4209977",
     ticketRef: "BC12345",
@@ -93,8 +93,8 @@ const dataSource = [
   },
   {
     name: "Alvin Acosta",
-    travel: "N/A",
-    date: "January 19, 2022",
+    travelDate: "January 19, 2022",
+    from: "Cubao",
     to: "Baguio",
     contactNumber: "0916-4209977",
     ticketRef: "BC12345",
@@ -107,13 +107,24 @@ const dataSource = [
 function SearchModule() {
   const [searchInput, setSearchInput] = useState("");
   console.log(searchInput);
+
+  const doSearch = () => {
+    // call search api here using search input
+    // and save result in state to display in table
+  };
+
   return (
     <div className="searchModule-container">
       <div className="search-div">
         <Input
           className="search-input"
-          placeholder="Search here"
-          suffix={<SearchOutlined className="search-icon" />}
+          placeholder="Search by Ticket ID"
+          suffix={
+            <SearchOutlined
+              className="search-icon"
+              onClick={() => alert(`SEARCH: ${searchInput}`)}
+            />
+          }
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           onPressEnter={() => alert(`SEARCH: ${searchInput}`)}
