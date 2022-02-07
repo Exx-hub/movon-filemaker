@@ -9,7 +9,7 @@ export const config = {
     build: "1.0.0(2)",
   },
   environment: "",
-  changeLogs: `feature/confirmation-modal/build2`,
+  changeLogs: `update/change-travel-date-row-add-from/build2`,
 };
 
 export const ERROR_CODES = {
