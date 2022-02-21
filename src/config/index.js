@@ -6,10 +6,10 @@ export const config = {
   },
   version: {
     environment: "",
-    build: "1.0.0(2)",
+    build: "1.0.0(3)",
   },
   environment: "",
-  changeLogs: `update/change-travel-date-row-add-from/build2`,
+  changeLogs: `feature/login-api/build3`,
 };
 
 export const ERROR_CODES = {

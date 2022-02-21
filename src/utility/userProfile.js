@@ -49,7 +49,7 @@ class UserProfileClass {
 
   getName() {
     if (this.user) {
-      return this.user.name;
+      return this.user.personalInfo.fullName;
     }
   }
 
