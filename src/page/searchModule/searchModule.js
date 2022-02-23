@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./searchModule.css";
 
 import { Input, Table } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import SearchAPI from "../../service/Search";
+
+import moment from "moment-timezone";
 
 const { Search } = Input;
 
@@ -38,15 +41,15 @@ const tableSource = [
     align: "center",
   },
   {
-    title: "Ticket Reference",
-    dataIndex: "ticketRef",
-    key: "ticketRef",
-    align: "center",
-  },
-  {
     title: "Ticket ID",
     dataIndex: "ticketId",
     key: "ticketId",
+    align: "center",
+  },
+  {
+    title: "Trip ID",
+    dataIndex: "tripId",
+    key: "tripId",
     align: "center",
   },
   {
@@ -57,60 +60,108 @@ const tableSource = [
   },
 ];
 
-const dataSource = [
-  {
-    name: "Alvin Acosta",
-    travelDate: "January 19, 2022",
-    from: "Cubao",
-    to: "Baguio",
-    contactNumber: "0916-4209977",
-    ticketRef: "BC12345",
-    ticketId: "T-13hiuefgfdg",
-    rsNumber: "123",
-    key: 0,
-  },
-  {
-    name: "Alvin Acosta",
-    travelDate: "January 19, 2022",
-    from: "Cubao",
-    to: "Baguio",
-    contactNumber: "0916-4209977",
-    ticketRef: "BC12345",
-    ticketId: "T-13hiuefgfdg",
-    rsNumber: "123",
-    key: 1,
-  },
-  {
-    name: "Alvin Acosta",
-    travelDate: "January 19, 2022",
-    from: "Cubao",
-    to: "Baguio",
-    contactNumber: "0916-4209977",
-    ticketRef: "BC12345",
-    ticketId: "T-13hiuefgfdg",
-    rsNumber: "123",
-    key: 2,
-  },
-  {
-    name: "Alvin Acosta",
-    travelDate: "January 19, 2022",
-    from: "Cubao",
-    to: "Baguio",
-    contactNumber: "0916-4209977",
-    ticketRef: "BC12345",
-    ticketId: "T-13hiuefgfdg",
-    rsNumber: "123",
-    key: 3,
-  },
-];
+// const dataSource = [
+//   {
+//     name: "Alvin Acosta",
+//     travelDate: "January 19, 2022",
+//     from: "Cubao",
+//     to: "Baguio",
+//     contactNumber: "0916-4209977",
+//     ticketRef: "BC12345",
+//     ticketId: "T-13hiuefgfdg",
+//     rsNumber: "123",
+//     key: 0,
+//   },
+//   {
+//     name: "Alvin Acosta",
+//     travelDate: "January 19, 2022",
+//     from: "Cubao",
+//     to: "Baguio",
+//     contactNumber: "0916-4209977",
+//     ticketRef: "BC12345",
+//     ticketId: "T-13hiuefgfdg",
+//     rsNumber: "123",
+//     key: 1,
+//   },
+//   {
+//     name: "Alvin Acosta",
+//     travelDate: "January 19, 2022",
+//     from: "Cubao",
+//     to: "Baguio",
+//     contactNumber: "0916-4209977",
+//     ticketRef: "BC12345",
+//     ticketId: "T-13hiuefgfdg",
+//     rsNumber: "123",
+//     key: 2,
+//   },
+//   {
+//     name: "Alvin Acosta",
+//     travelDate: "January 19, 2022",
+//     from: "Cubao",
+//     to: "Baguio",
+//     contactNumber: "0916-4209977",
+//     ticketRef: "BC12345",
+//     ticketId: "T-13hiuefgfdg",
+//     rsNumber: "123",
+//     key: 3,
+//   },
+// ];
 
 function SearchModule() {
   const [searchInput, setSearchInput] = useState("");
   console.log(searchInput);
+  const [records, setRecords] = useState(null);
+  console.log("records:", records);
 
-  const doSearch = () => {
-    // call search api here using search input
-    // and save result in state to display in table
+  useEffect(() => {
+    getAllLatest();
+  }, []);
+
+  const getAllLatest = () => {
+    SearchAPI.getAll()
+      .then((e) => {
+        const { data, success, errorCode } = e.data;
+        parseData(data.list);
+        // console.log(data)
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const parseData = (dataResult) => {
+    const records = dataResult.map((e, i) => {
+      // console.log("record:", e);
+
+      return {
+        key: i,
+        name: e.passengerInfo.fullName,
+        travelDate: moment
+          .tz(e.travelDate, "Asia/Manila")
+          .format("MMM DD, YYYY hh:mm:ss A"),
+        from: e.startStation,
+        to: e.endStation,
+        contactNumber: e.passengerInfo.phone.number,
+        ticketId: e.ticketId,
+        tripId: e.tripId,
+        rsNumber: e.rsNo,
+      };
+    });
+
+    setRecords(records);
+  };
+
+  const doSearch = (searchInput) => {
+    if (searchInput) {
+      SearchAPI.getTransactionById(searchInput)
+        .then((e) => {
+          const { data, success, errorCode } = e.data;
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   };
 
   return (
@@ -122,12 +173,12 @@ function SearchModule() {
           suffix={
             <SearchOutlined
               className="search-icon"
-              onClick={() => alert(`SEARCH: ${searchInput}`)}
+              onClick={() => doSearch(searchInput)}
             />
           }
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          onPressEnter={() => alert(`SEARCH: ${searchInput}`)}
+          onPressEnter={() => doSearch(searchInput)}
         />
       </div>
       <div className="table-container">
@@ -139,7 +190,7 @@ function SearchModule() {
           pagination={{ position: ["bottomCenter"] }}
           // pagination={false}
           columns={tableSource}
-          dataSource={dataSource}
+          dataSource={records}
           bordered
           // to use pagination from ant D, default table pagination not ideal
         />
