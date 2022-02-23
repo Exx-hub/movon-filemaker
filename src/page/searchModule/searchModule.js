@@ -7,8 +7,6 @@ import SearchAPI from "../../service/Search";
 
 import moment from "moment-timezone";
 
-const { Search } = Input;
-
 const tableSource = [
   {
     title: "Name",
@@ -60,53 +58,6 @@ const tableSource = [
   },
 ];
 
-// const dataSource = [
-//   {
-//     name: "Alvin Acosta",
-//     travelDate: "January 19, 2022",
-//     from: "Cubao",
-//     to: "Baguio",
-//     contactNumber: "0916-4209977",
-//     ticketRef: "BC12345",
-//     ticketId: "T-13hiuefgfdg",
-//     rsNumber: "123",
-//     key: 0,
-//   },
-//   {
-//     name: "Alvin Acosta",
-//     travelDate: "January 19, 2022",
-//     from: "Cubao",
-//     to: "Baguio",
-//     contactNumber: "0916-4209977",
-//     ticketRef: "BC12345",
-//     ticketId: "T-13hiuefgfdg",
-//     rsNumber: "123",
-//     key: 1,
-//   },
-//   {
-//     name: "Alvin Acosta",
-//     travelDate: "January 19, 2022",
-//     from: "Cubao",
-//     to: "Baguio",
-//     contactNumber: "0916-4209977",
-//     ticketRef: "BC12345",
-//     ticketId: "T-13hiuefgfdg",
-//     rsNumber: "123",
-//     key: 2,
-//   },
-//   {
-//     name: "Alvin Acosta",
-//     travelDate: "January 19, 2022",
-//     from: "Cubao",
-//     to: "Baguio",
-//     contactNumber: "0916-4209977",
-//     ticketRef: "BC12345",
-//     ticketId: "T-13hiuefgfdg",
-//     rsNumber: "123",
-//     key: 3,
-//   },
-// ];
-
 function SearchModule() {
   const [searchInput, setSearchInput] = useState("");
   console.log(searchInput);
@@ -114,8 +65,10 @@ function SearchModule() {
   console.log("records:", records);
 
   useEffect(() => {
-    getAllLatest();
-  }, []);
+    if (searchInput === "") {
+      getAllLatest();
+    }
+  }, [searchInput]);
 
   const getAllLatest = () => {
     SearchAPI.getAll()
@@ -127,6 +80,25 @@ function SearchModule() {
       .catch((err) => {
         console.log(err.message);
       });
+  };
+
+  const doSearch = (searchInput) => {
+    if (searchInput) {
+      SearchAPI.getTransactionById(searchInput)
+        .then((e) => {
+          const { data, success, errorCode } = e.data;
+          console.log(data);
+
+          if (data.list.length > 1) {
+            setRecords(null);
+          } else {
+            parseData(data.list);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   };
 
   const parseData = (dataResult) => {
@@ -149,19 +121,6 @@ function SearchModule() {
     });
 
     setRecords(records);
-  };
-
-  const doSearch = (searchInput) => {
-    if (searchInput) {
-      SearchAPI.getTransactionById(searchInput)
-        .then((e) => {
-          const { data, success, errorCode } = e.data;
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    }
   };
 
   return (

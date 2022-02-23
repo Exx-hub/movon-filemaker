@@ -9,7 +9,7 @@ export const config = {
     build: "1.0.0(3)",
   },
   environment: "",
-  changeLogs: `feature/login-api/build3`,
+  changeLogs: `feature/search-api-by-ticketId/build3`,
 };
 
 export const ERROR_CODES = {
