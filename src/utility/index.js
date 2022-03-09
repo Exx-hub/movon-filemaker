@@ -34,4 +34,20 @@ const logoutSuccess = () => {
   notification.success(args);
 };
 
-export { UserProfile, loginSuccessPrompt, loginFailedPrompt, logoutSuccess };
+const noData = () => {
+  const args = {
+    message: "No Data",
+    description: "No Data found or something went wrong. Please try again.",
+    duration: 4,
+  };
+
+  notification.warn(args);
+};
+
+export {
+  UserProfile,
+  loginSuccessPrompt,
+  loginFailedPrompt,
+  logoutSuccess,
+  noData,
+};

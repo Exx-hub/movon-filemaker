@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import "./transactionModule.css";
-import { dataSource } from "./sampleData";
+// import { dataSource } from "./sampleData";
+
+import TransactionAPI from "../../service/Transaction";
 
 import { Input, DatePicker, Table, Dropdown, Button } from "antd";
+import moment from "moment-timezone";
 
-import { ProfileOutlined, DownOutlined } from "@ant-design/icons";
+import {
+  ProfileOutlined,
+  DownOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
+import { noData } from "../../utility";
 
 const { RangePicker } = DatePicker;
 
@@ -21,12 +29,12 @@ const tableSource = [
     key: "travelDate",
     align: "center",
   },
-  {
-    title: "Time",
-    dataIndex: "time",
-    key: "time",
-    align: "center",
-  },
+  // {
+  //   title: "Time",
+  //   dataIndex: "time",
+  //   key: "time",
+  //   align: "center",
+  // },
   {
     title: "Bus Type",
     dataIndex: "busType",
@@ -118,12 +126,68 @@ const tableSource = [
 
 function TransactionModule() {
   const [rsInput, setRsInput] = useState("");
+  // console.log(rsInput);
+  const [records, setRecords] = useState(null);
+  // console.log(records[0]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const [titleValues, setTitleValues] = useState(null);
+  console.log(titleValues);
 
   const handleDownload = () => {
     // add download xls api here with passed filters
     alert("download xls clicked");
+  };
+
+  const searchByRsNo = () => {
+    TransactionAPI.getTransactionByRsNo(rsInput).then((e) => {
+      const { data, success, errorCode } = e.data;
+
+      // console.log(e);
+
+      if (errorCode || !success) {
+        console.log("no data");
+        noData();
+        setTitleValues(null);
+        setRecords(null);
+      }
+
+      if (success) {
+        console.log("there is data");
+        parseData(data.list);
+      }
+    });
+  };
+
+  const parseData = (dataResult) => {
+    const records = dataResult.map((e, i) => {
+      // console.log("record:", e);
+
+      return {
+        rsNumber: e.fieldData.rsNo,
+        travelDate: moment
+          .tz(e.fieldData.travelDate, "Asia/Manila")
+          .format("MMM DD, YYYY hh:mm:ss A"),
+        busType: e.fieldData.busType,
+        seatNumber: e.fieldData.seatNo,
+        ticketNumber: e.fieldData.ticketNo,
+        passengerName: e.fieldData.nameOfPassenger,
+        contactNumber: e.fieldData.contactNo,
+        from: e.fieldData.from,
+        to: e.fieldData.to,
+        amount: e.fieldData.amount,
+        remarks: e.fieldData.remarks,
+        status: e.fieldData.status,
+        userId: e.fieldData.modificationLog_userID,
+        timestamp: e.fieldData.modificationLog_timestamp,
+        deviceId: e.fieldData.modificationLog_deviceID,
+        key: e.recordId,
+      };
+    });
+
+    setRecords(records);
+    setTitleValues(records.find((e) => e.from));
   };
 
   const menu = (
@@ -136,7 +200,19 @@ function TransactionModule() {
   return (
     <div className="transactionModule-container">
       <div className="search-date-container">
-        <Input placeholder="RS #" style={{ width: "20%" }} />
+        <Input
+          placeholder="Enter RS #"
+          style={{ width: "20%" }}
+          value={rsInput}
+          onChange={(e) => setRsInput(e.target.value)}
+          onPressEnter={searchByRsNo}
+          suffix={
+            <SearchOutlined
+              style={{ cursor: "pointer" }}
+              onClick={searchByRsNo}
+            />
+          }
+        />
 
         <div className="date-dropdown-div">
           <RangePicker style={{ width: "100%" }} />
@@ -153,36 +229,24 @@ function TransactionModule() {
         <div className="trip-details">
           <div className="trip-manifest-title">Trip Manifest</div>
           <div className="title-values-div">
-            <div style={{ marginRight: "50px" }}>
-              <div>
+            <div style={{ display: "flex" }}>
+              <div style={{ marginRight: "20px" }}>
                 <span className="title">Travel Date: </span>
-                <span className="value">January 22, 2022</span>
+                <span className="value">
+                  {titleValues ? titleValues.travelDate : `---`}
+                </span>
               </div>
-              <div>
-                <span className="title">Driver: </span>
-                <span className="value">Alvin Acosta</span>
-              </div>
-            </div>
-
-            <div style={{ marginRight: "50px" }}>
-              <div>
+              <div style={{ marginRight: "20px" }}>
                 <span className="title">From: </span>
-                <span className="value">Edsa, Cubao</span>
+                <span className="value">
+                  {titleValues ? titleValues.from : `---`}
+                </span>
               </div>
-              <div>
+              <div style={{ marginRight: "20px" }}>
                 <span className="title">To: </span>
-                <span className="value">Baguio City</span>
-              </div>
-            </div>
-
-            <div style={{ marginRight: "20px" }}>
-              <div>
-                <span className="title"> Bus No.: </span>
-                <span className="value">12345</span>
-              </div>
-              <div>
-                <span className="title">Plate No.: </span>
-                <span className="value">SLP 1990</span>
+                <span className="value">
+                  {titleValues ? titleValues.to : `---`}
+                </span>
               </div>
             </div>
           </div>
@@ -193,7 +257,7 @@ function TransactionModule() {
         <div className="tableContainer">
           <Table
             columns={tableSource}
-            dataSource={dataSource}
+            dataSource={records}
             pagination={false}
             bordered
             scroll={{ x: "max-content" }}

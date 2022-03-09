@@ -16,6 +16,7 @@ import {
 import { useHistory } from "react-router-dom";
 
 import { LoadingOutlined } from "@ant-design/icons";
+import User from "../../service/User";
 
 function Login() {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,43 +30,32 @@ function Login() {
   React.useEffect(() => {
     if (UserProfile.getCredential()) {
       history.push("/");
-
-      // onFinish, userid and pass will be sent to server and if correct credentials, server will return data with the response.
-      // user data and token will be saved in localstorate with key "credential". then state will be changed to loading false,
-      // that state change will trigger this userEffect, checking if there is value for credential, will change url to "/"
-      // window.location.replace("/");
     }
   }, [history]);
 
   const onFinish = () => {
     setIsLoading(true);
 
-    // login api here!!!
-    // add alerts/notifications
-
-    console.log(username, password);
-
-    if (username === "user" && password === "123456") {
-      setTimeout(() => {
+    User.login(username, password)
+      .then((e) => {
+        const { data, success, errorCode } = e.data;
+        console.log("FRESH FROM LOGIN FETCH:", e.data);
         setIsLoading(false);
-        loginSuccessPrompt();
 
-        // hardcoded setting of creds in localstorage w/out api
-        UserProfile.setCredential({
-          user: { name: username },
-          token: password,
-        });
+        if (errorCode) {
+          loginFailedPrompt();
+        }
 
-        setTimeout(() => {
+        if (success) {
+          UserProfile.setCredential({ user: data.user, token: data.token });
+          loginSuccessPrompt();
           history.push("/");
-        }, 1000);
-      }, 2000);
-    } else {
-      setTimeout(() => {
+        }
+      })
+      .catch((err) => {
         setIsLoading(false);
-        loginFailedPrompt();
-      }, 2000);
-    }
+        console.log(err);
+      });
   };
 
   return (
