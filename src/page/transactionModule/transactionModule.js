@@ -148,9 +148,8 @@ function TransactionModule() {
 
       if (errorCode || !success) {
         console.log("no data");
-
-        // fail prompt?
         noData();
+        setTitleValues(null);
         setRecords(null);
       }
 
@@ -188,7 +187,7 @@ function TransactionModule() {
     });
 
     setRecords(records);
-    setTitleValues(records[0]);
+    setTitleValues(records.find((e) => e.from));
   };
 
   const menu = (

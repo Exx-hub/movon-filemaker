@@ -6,6 +6,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import SearchAPI from "../../service/Search";
 
 import moment from "moment-timezone";
+import { noData } from "../../utility";
 
 const tableSource = [
   {
@@ -89,7 +90,8 @@ function SearchModule() {
           const { data, success, errorCode } = e.data;
           console.log(data);
 
-          if (data.list.length > 1) {
+          if (data.list.length < 1) {
+            noData();
             setRecords(null);
           } else {
             parseData(data.list);
