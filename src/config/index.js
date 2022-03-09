@@ -6,10 +6,10 @@ export const config = {
   },
   version: {
     environment: "",
-    build: "1.0.0(3)",
+    build: "1.0.0(4)",
   },
   environment: "",
-  changeLogs: `feature/search-api-by-ticketId/build3`,
+  changeLogs: `feature/transactionModuleApi/build4`,
 };
 
 export const ERROR_CODES = {
