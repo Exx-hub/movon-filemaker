@@ -9,7 +9,7 @@ export const config = {
     build: "1.0.0(4)",
   },
   environment: "",
-  changeLogs: `feature/transactionModuleApi/build4`,
+  changeLogs: `bugFix/envUrlUpdate/build4`,
 };
 
 export const ERROR_CODES = {
