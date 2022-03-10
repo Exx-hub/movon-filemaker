@@ -7,8 +7,8 @@ const User = {
   login: (username, password) => {
     return axios({
       method: "POST",
-      url: `${BASE_URL}/filemaker/auth/login`,
-      // url: 'https://www.cargomovon.com/server/api/v1/filemaker/auth/login',
+      // url: `${BASE_URL}/filemaker/auth/login`,
+      url: "https://www.cargomovon.com/server/api/v1/filemaker/auth/login",
       data: {
         adminId: username,
         password,
