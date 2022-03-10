@@ -19,7 +19,8 @@
 }
 .header-logo {
   height: 65px;
-  transform: translateY(15px);
+  /* transform: translateY(15px); */
+  margin-top: 20%;
 }
 
 .user-icon {
