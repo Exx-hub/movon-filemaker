@@ -14,9 +14,15 @@ function _Header() {
   const history = useHistory();
   return (
     <Header className="home-header">
-      <div className="home-header-logo" onClick={() => history.push("/")}>
-        <Image preview={false} className="header-logo" src={logo} alt="" />
-      </div>
+      {/* <div className="home-header-logo"> */}
+      <Image
+        preview={false}
+        className="header-logo"
+        src={logo}
+        alt=""
+        onClick={() => history.push("/")}
+      />
+      {/* </div> */}
       <div className="welcome-message-div">
         <UserOutlined className="user-icon" />{" "}
         <span className="welcome-message">
