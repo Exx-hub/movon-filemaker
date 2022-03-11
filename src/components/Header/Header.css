@@ -9,18 +9,12 @@
 
   padding: 0 40px;
 }
-.home-header-logo {
-  min-width: 210px;
 
-  cursor: pointer;
-  /* width: 205px; */
-
-  /* border: 1px solid red; */
-}
 .header-logo {
   height: 65px;
-  /* transform: translateY(15px); */
-  /* margin-top: 20%; */
+  min-width: 150px;
+
+  cursor: pointer;
 }
 
 .user-icon {
@@ -29,9 +23,9 @@
   font-size: 16px;
 }
 
-.welcome-message-div {
-  /* min-width: 230px; */
-}
+/* .welcome-message-div {
+  min-width: 230px;
+} */
 
 .welcome-message {
   color: white;
