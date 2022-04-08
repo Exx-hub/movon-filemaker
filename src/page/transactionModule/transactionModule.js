@@ -140,6 +140,44 @@ function TransactionModule() {
     alert("download xls clicked");
   };
 
+  const [statusVisible, setStatusVisible] = useState(false);
+  const [statusArray, setStatusArray] = useState([]);
+  console.log(statusArray);
+
+  // const handleStatusFilter = (status) => {
+  //   switch (status) {
+  //     case "Booked":
+  //       if (!statusArray.includes(status)) {
+  //         setStatusArray([...statusArray, status]);
+  //       } else {
+  //         filtered = statusArray.filter((item) => item !== status);
+  //         setStatusArray(filtered);
+  //       }
+  //   }
+  // };
+
+  const toggleStatusArray = (status) => {
+    let filtered;
+
+    // const obj = {
+    //   Pending: 0,
+    //   Booked: 1,
+    //   Cancelled: 2,
+    // };
+    // try this too!
+
+    if (!statusArray.includes(status)) {
+      setStatusArray([...statusArray, status]);
+    } else {
+      filtered = statusArray.filter((item) => item !== status);
+      setStatusArray(filtered);
+    }
+  };
+
+  const handleVisibleChange = (flag) => {
+    setStatusVisible(flag);
+  };
+
   const searchByRsNo = () => {
     TransactionAPI.getTransactionByRsNo(rsInput).then((e) => {
       const { data, success, errorCode } = e.data;
@@ -190,35 +228,79 @@ function TransactionModule() {
     setTitleValues(records.find((e) => e.from));
   };
 
-  const menu = (
-    <div className="dropdown-menu">
+  const downloadMenu = (
+    <div className="dropdown-menu center">
       <div onClick={handleDownload}>
         <ProfileOutlined /> Download XLS
+      </div>
+    </div>
+  );
+
+  const statusMenu = (
+    <div className="dropdown-menu">
+      <div>
+        <input
+          type="checkbox"
+          name="Pending"
+          onChange={(e) => toggleStatusArray(e.target.name)}
+          style={{ marginLeft: ".5em", marginRight: ".5em" }}
+        />
+        Pending
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          name="Booked"
+          onChange={(e) => toggleStatusArray(e.target.name)}
+          style={{ marginLeft: ".5em", marginRight: ".5em" }}
+        />
+        Booked
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          name="Cancelled"
+          onChange={(e) => toggleStatusArray(e.target.name)}
+          style={{ marginLeft: ".5em", marginRight: ".5em" }}
+        />
+        Cancelled
       </div>
     </div>
   );
   return (
     <div className="transactionModule-container">
       <div className="search-date-container">
-        <Input
-          placeholder="Enter RS #"
-          style={{ width: "20%" }}
-          value={rsInput}
-          onChange={(e) => setRsInput(e.target.value)}
-          onPressEnter={searchByRsNo}
-          suffix={
-            <SearchOutlined
-              style={{ cursor: "pointer" }}
-              onClick={searchByRsNo}
-            />
-          }
-        />
+        <div className="input-date-div">
+          <Input
+            placeholder="Enter RS #"
+            style={{ width: "20%" }}
+            value={rsInput}
+            onChange={(e) => setRsInput(e.target.value)}
+            onPressEnter={searchByRsNo}
+            suffix={
+              <SearchOutlined
+                style={{ cursor: "pointer" }}
+                onClick={searchByRsNo}
+              />
+            }
+          />
+
+          <RangePicker style={{ width: "25%" }} />
+        </div>
 
         <div className="date-dropdown-div">
-          <RangePicker style={{ width: "100%" }} />
+          <Dropdown
+            overlay={statusMenu}
+            onVisibleChange={handleVisibleChange}
+            visible={statusVisible}
+          >
+            <Button className="status-dropdown">
+              Status <DownOutlined />
+            </Button>
+          </Dropdown>
 
-          <Dropdown overlay={menu}>
-            <Button className="dropdown-item-btn">
+          <Dropdown overlay={downloadMenu}>
+            <Button className="download-dropdown">
               <DownOutlined /> Download
             </Button>
           </Dropdown>

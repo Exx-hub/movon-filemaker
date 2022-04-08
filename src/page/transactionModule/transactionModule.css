@@ -1,26 +1,32 @@
 .transactionModule-container {
   height: 92vh;
   padding: 20px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 .search-date-container {
   /* border: 1px solid red; */
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+ 
   padding: 20px 0px;
-}
-.date-dropdown-div {
-  width: 20%;
-  display: flex;
-  align-items: flex-end;
   flex-direction: column;
 }
-.dropdown-item-btn {
-  width: 120px;
-  margin-top: 7px;
-  /* cursor: pointer; */
+.input-date-div {
+  display: flex;
+  justify-content: space-between;
 }
+.date-dropdown-div {
+  display: flex;
+  justify-content: space-between;
+   margin-top: 7px;
+}
+
+.status-dropdown {
+  width: 110px;
+}
+.download-dropdown {
+  width: 120px;
+}
+
 
 .dropdown-menu {
   display: flex;
@@ -28,9 +34,12 @@
   background-color: white;
   padding: 5px;
   font-size: 12px;
-  text-align: center;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.center {
+  text-align: center;
 }
 
 .trip-details-container {
