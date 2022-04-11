@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./transactionModule.css";
 // import { dataSource } from "./sampleData";
 
@@ -14,6 +14,7 @@ import {
 } from "@ant-design/icons";
 import { noData } from "../../utility";
 
+const dateFormat = "MMM DD, YYYY hh:mm";
 const { RangePicker } = DatePicker;
 
 const tableSource = [
@@ -126,14 +127,15 @@ const tableSource = [
 
 function TransactionModule() {
   const [rsInput, setRsInput] = useState("");
-  // console.log(rsInput);
+
   const [records, setRecords] = useState(null);
-  // console.log(records[0]);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+
+  const [startDate, setStartDate] = useState(moment().format(dateFormat));
+  const [endDate, setEndDate] = useState(moment().format(dateFormat));
+  console.log(startDate, endDate);
 
   const [titleValues, setTitleValues] = useState(null);
-  console.log(titleValues);
+  // console.log(titleValues);
 
   const handleDownload = () => {
     // add download xls api here with passed filters
@@ -142,29 +144,15 @@ function TransactionModule() {
 
   const [statusVisible, setStatusVisible] = useState(false);
   const [statusArray, setStatusArray] = useState([]);
-  console.log(statusArray);
+  // console.log(statusArray);
 
-  // const handleStatusFilter = (status) => {
-  //   switch (status) {
-  //     case "Booked":
-  //       if (!statusArray.includes(status)) {
-  //         setStatusArray([...statusArray, status]);
-  //       } else {
-  //         filtered = statusArray.filter((item) => item !== status);
-  //         setStatusArray(filtered);
-  //       }
-  //   }
-  // };
+  useEffect(() => {
+    //fetch data using initial date values
+    console.log("fetching data using initial date values");
+  }, []);
 
   const toggleStatusArray = (status) => {
     let filtered;
-
-    // const obj = {
-    //   Pending: 0,
-    //   Booked: 1,
-    //   Cancelled: 2,
-    // };
-    // try this too!
 
     if (!statusArray.includes(status)) {
       setStatusArray([...statusArray, status]);
@@ -228,6 +216,20 @@ function TransactionModule() {
     setTitleValues(records.find((e) => e.from));
   };
 
+  const onChangeDatePicker = (date) => {
+    console.log(date);
+    const start = date[0];
+    const end = date[1];
+    // console.log(startDate);
+    // console.log(endDate);
+
+    if (start && end) {
+      // fetch transactions api
+      setStartDate(start);
+      setEndDate(end);
+    }
+  };
+
   const downloadMenu = (
     <div className="dropdown-menu center">
       <div onClick={handleDownload}>
@@ -241,7 +243,7 @@ function TransactionModule() {
       <div>
         <input
           type="checkbox"
-          name="Pending"
+          name="PENDING"
           onChange={(e) => toggleStatusArray(e.target.name)}
           style={{ marginLeft: ".5em", marginRight: ".5em" }}
         />
@@ -250,7 +252,7 @@ function TransactionModule() {
       <div>
         <input
           type="checkbox"
-          name="Booked"
+          name="BOOKED"
           onChange={(e) => toggleStatusArray(e.target.name)}
           style={{ marginLeft: ".5em", marginRight: ".5em" }}
         />
@@ -259,7 +261,7 @@ function TransactionModule() {
       <div>
         <input
           type="checkbox"
-          name="Cancelled"
+          name="CANCELLED"
           onChange={(e) => toggleStatusArray(e.target.name)}
           style={{ marginLeft: ".5em", marginRight: ".5em" }}
         />
@@ -285,7 +287,14 @@ function TransactionModule() {
             }
           />
 
-          <RangePicker style={{ width: "25%" }} />
+          <RangePicker
+            style={{ width: "25%" }}
+            defaultValue={[
+              moment(startDate, dateFormat),
+              moment(endDate, dateFormat),
+            ]}
+            onChange={(x, date) => onChangeDatePicker(date)}
+          />
         </div>
 
         <div className="date-dropdown-div">
